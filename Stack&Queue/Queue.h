@@ -1,0 +1,14 @@
+//
+// Created by alejandro on 21/10/2023.
+//
+
+#ifndef ALGORITHMANDDATASTRUCTURE_QUEUE_H
+#define ALGORITHMANDDATASTRUCTURE_QUEUE_H
+
+
+class Queue {
+
+};
+
+
+#endif //ALGORITHMANDDATASTRUCTURE_QUEUE_H

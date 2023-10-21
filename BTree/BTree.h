@@ -1,0 +1,14 @@
+//
+// Created by alejandro on 21/10/2023.
+//
+
+#ifndef ALGORITHMANDDATASTRUCTURE_BTREE_H
+#define ALGORITHMANDDATASTRUCTURE_BTREE_H
+
+
+class BTree {
+
+};
+
+
+#endif //ALGORITHMANDDATASTRUCTURE_BTREE_H

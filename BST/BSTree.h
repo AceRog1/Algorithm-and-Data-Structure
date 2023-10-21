@@ -1,0 +1,14 @@
+//
+// Created by alejandro on 21/10/2023.
+//
+
+#ifndef ALGORITHMANDDATASTRUCTURE_BSTREE_H
+#define ALGORITHMANDDATASTRUCTURE_BSTREE_H
+
+
+class BSTree {
+
+};
+
+
+#endif //ALGORITHMANDDATASTRUCTURE_BSTREE_H

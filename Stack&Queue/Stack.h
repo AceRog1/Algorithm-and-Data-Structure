@@ -1,0 +1,14 @@
+//
+// Created by alejandro on 21/10/2023.
+//
+
+#ifndef ALGORITHMANDDATASTRUCTURE_STACK_H
+#define ALGORITHMANDDATASTRUCTURE_STACK_H
+
+
+class Stack {
+
+};
+
+
+#endif //ALGORITHMANDDATASTRUCTURE_STACK_H

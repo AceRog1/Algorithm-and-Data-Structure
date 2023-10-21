@@ -1,0 +1,14 @@
+//
+// Created by alejandro on 21/10/2023.
+//
+
+#ifndef ALGORITHMANDDATASTRUCTURE_AVLTREE_H
+#define ALGORITHMANDDATASTRUCTURE_AVLTREE_H
+
+
+class AVLTree {
+
+};
+
+
+#endif //ALGORITHMANDDATASTRUCTURE_AVLTREE_H
