@@ -3,13 +3,15 @@
 //
 
 #include <iostream>
-#include "Stack&Queue/Stack.h"
-#include "Stack&Queue/Queue.h"
-#include "CircularArray/CircularArray.h"
+#include "StackAndQueue/Stack.h"
+//#include "Stack&Queue/Queue.h"
+//#include "CircularArray/CircularArray.h"
 
 int main(){
 
-    std::cout << "Hello World!" << std::endl;
+    int i = 2;
+    Stack<int> stack;
+    stack.push(i);
 
     return 0;
 }
