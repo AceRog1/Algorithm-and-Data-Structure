@@ -15,7 +15,7 @@ private:
         Node(){
             next = nullptr;
         }
-        Node(T value){
+        explicit Node(T value){
             data = value;
             next = nullptr;
         }
