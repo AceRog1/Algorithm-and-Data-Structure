@@ -3,9 +3,9 @@
 //
 
 #include <iostream>
-#include "Stack&Queue/Stack.h"
-#include "Stack&Queue/Queue.h"
-#include "CircularArray/CircularArray.h"
+#include "StackAndQueue/Stack.h"
+#include "StackAndQueue/Queue.h"
+#include "StackAndQueue/Queue.cpp"
 
 int main(){
 
