@@ -3,13 +3,23 @@
 //
 
 #include <iostream>
-#include "StackAndQueue/Stack.h"
+//#include "StackAndQueue/Stack.h"
 #include "StackAndQueue/Queue.h"
 #include "StackAndQueue/Queue.cpp"
 
 int main(){
 
-    std::cout << "Hello World!" << std::endl;
+    Queue<int> queue;
+    queue.push(3);
+    queue.push(7);
+    queue.push(9);
+    //queue.pop();
+    //queue.pop();
+    //queue.pop();
+    //queue.pop();
+    cout << queue.front() << endl;
+    //std::cout << queue.back() << std::endl;
+    //std::cout << queue.size() << std::endl;
 
     return 0;
 }
