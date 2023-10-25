@@ -3,9 +3,6 @@
 //
 
 #include <iostream>
-#include "Stack&Queue/Stack.h"
-#include "Stack&Queue/Queue.h"
-#include "CircularArray/CircularArray.h"
 
 int main(){
 
