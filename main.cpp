@@ -18,8 +18,8 @@ int main(){
     //queue.pop();
     //queue.pop();
     cout << queue.front() << endl;
-    //std::cout << queue.back() << std::endl;
-    //std::cout << queue.size() << std::endl;
+    std::cout << queue.back() << std::endl;
+    std::cout << queue.size() << std::endl;
 
     return 0;
 }
