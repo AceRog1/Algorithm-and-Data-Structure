@@ -29,6 +29,7 @@ private:
     int length;
     Node* head;
 public:
+    ForwardList();
     T front() override;
     T back() override;
     void push_front(T) override;
@@ -45,6 +46,7 @@ public:
     bool is_sorted() override;
     void reverse() override;
     std::string name() override;
+    ~ForwardList();
 };
 
 
