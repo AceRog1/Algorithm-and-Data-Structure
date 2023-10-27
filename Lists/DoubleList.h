@@ -32,6 +32,7 @@ private:
 private:
     int length;
     Node* head;
+    Node* tail;
 public:
     DoubleList();
     T front() override;
