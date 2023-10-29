@@ -32,8 +32,8 @@ public:
     ForwardList();
     T front() override;
     T back() override;
-    void push_front(T) override;
-    void push_back(T) override;
+    void push_front(T value) override;
+    void push_back(T value) override;
     T pop_front() override;
     T pop_back() override;
     bool insert(T, int) override;
