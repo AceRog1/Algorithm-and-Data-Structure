@@ -21,9 +21,8 @@ T ForwardList<T>::front(){
 template<typename T>
 T ForwardList<T>::back(){
     Node *temp = head;
-    for(int i = 0; i < length-1; i++){
+    for(int i = 0; i < length-1; i++)
         temp = temp->next;
-    }
     return temp->data;
 }
 
@@ -46,7 +45,7 @@ void ForwardList<T>::push_back(T value){
         head = newNode;
     } else {
         Node* temp = head;
-        for(int i = length; i < size(); i++)
+        for(int i = 1; i < size(); i++)
             temp = temp->next;
         temp->next = newNode;
     }
@@ -70,7 +69,7 @@ T ForwardList<T>::pop_front(){
 template<typename T>
 T ForwardList<T>::pop_back(){
     if (size() == 0){
-        throw runtime_error("No elemntes in the list");
+        throw runtime_error("No elements in the list");
     } else if (size() == 1){
         Node* popNode = head;
         T value = popNode->data;
@@ -82,7 +81,6 @@ T ForwardList<T>::pop_back(){
         for(int i = 0; i < size()-1; i++)
             popNode = popNode->next;
         Node* lastNode = popNode;
-        popNode->next;
         lastNode->next = nullptr;
         T value = popNode->data;
         popNode->killself();
@@ -92,18 +90,81 @@ T ForwardList<T>::pop_back(){
 }
 
 template<typename T>
-bool ForwardList<T>::insert(T, int){
-    //TODO
+bool ForwardList<T>::insert(T value, int pos){
+    if (pos <= size()+1){
+        if (pos == 1){
+            push_back(value);
+            return true;
+        } else if (pos == length+1){
+            push_front(value);
+            return true;
+        } else {
+            Node* newNode = new Node(value);
+            Node* temp = head;
+            int realPos = length - pos;
+            for (int i = 0; i < realPos; i++)
+                temp = temp->next;
+            newNode->next = temp->next;
+            temp->next = newNode;
+            length++;
+            return true;
+        }
+    } else if (pos > size()+1){
+        return false;
+    }
+    //return false;
 }
 
 template<typename T>
-bool ForwardList<T>::remove(int){
-    //TODO
+bool ForwardList<T>::remove(int pos){
+    if (pos <= size()){
+        if (pos == 1){
+            pop_back();
+            return true;
+        } else if (pos == length){
+            pop_front();
+            return true;
+        } else {
+            Node* prePopNode = head;
+            int realPos = length - pos;
+            for (int i = 0; i < realPos-1; i++)
+                prePopNode = prePopNode->next;
+            Node* popNode = prePopNode->next;
+            prePopNode->next = popNode->next;
+            popNode->killself();
+            length--;
+            return true;
+        }
+    } else if (pos > size()){
+        return false;
+    }
 }
 
 template<typename T>
-T& ForwardList<T>::operator[](int){
-    //TODO
+T& ForwardList<T>::operator[](int pos) {
+    if (pos < length+1 && 0 < pos) {
+        if (pos == length) {
+            return head->data;
+        } else if (pos == 1) {
+            Node *temp = head;
+            for (int i = 0; i < length - 1; i++)
+                temp = temp->next;
+            return temp->data;
+        } else {
+            Node *selectNode = head;
+            int realPos = length - pos;
+            for (int i = 0; i <= realPos - 1; i++)
+                selectNode = selectNode->next;
+            return selectNode->data;
+        }
+    } else {
+        if (pos > size()){
+            throw runtime_error("Invalid Position");
+        } else if (pos == 0){
+            throw runtime_error("No elements in the list");
+        }
+        throw runtime_error("ERROR");
+    }
 }
 
 template<typename T>
@@ -121,9 +182,8 @@ int ForwardList<T>::size(){
 
 template<typename T>
 void ForwardList<T>::clear(){
-    for(int i = 0; i < size(); i++){
+    for(int i = 0; i < size(); i++)
         pop_front();
-    }
 }
 
 template<typename T>
@@ -138,7 +198,33 @@ bool ForwardList<T>::is_sorted(){
 
 template<typename T>
 void ForwardList<T>::reverse(){
-    //TODO
+    if(size() >= 3){
+        Node* a = head;
+        Node* b = head->next;
+        Node* c = head->next->next;
+        while (c->next != nullptr){
+            if (a == head)
+                a->next = nullptr;
+            b->next = a;
+            a = b;
+            b = c;
+            c = c->next;
+        }
+        b->next = a;
+        c->next = b;
+        if(size() == 3)
+            a->next = nullptr;
+        head = c;
+    } else if(size() == 2) {
+        Node* temp = head->next;
+        temp->next = head;
+        head->next = nullptr;
+        head = temp;
+    } else if(size() == 1){
+        head->next = nullptr;
+    } else {
+        throw runtime_error("No elements in the list");
+    }
 }
 
 template<typename T>

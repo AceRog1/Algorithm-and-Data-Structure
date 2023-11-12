@@ -36,9 +36,9 @@ public:
     void push_back(T value) override;
     T pop_front() override;
     T pop_back() override;
-    bool insert(T, int) override;
-    bool remove(int) override;
-    T& operator[](int) override;
+    bool insert(T value, int pos) override;
+    bool remove(int pos) override;
+    T& operator[](int pos) override;
     bool is_empty() override;
     int size() override;
     void clear() override;
