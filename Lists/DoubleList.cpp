@@ -95,7 +95,42 @@ T DoubleList<T>::pop_back(){
 
 template<typename T>
 bool DoubleList<T>::insert(T value, int pos){
-    //TODO
+    if (pos <= size()+1){
+        if (pos == size()+1){
+            push_back(value);
+        } else if (pos == 1) {
+            push_front(value);
+        } else {
+            Node* newNode = new Node(value);
+            int index = size()/2;
+            if (pos <= index){
+                Node* temp = head;
+                for (int i = 1; i < pos-1; i++){
+                    temp = temp->next;
+                }
+                newNode->next = temp->next;
+                newNode->prev = temp;
+                temp->next->prev = newNode;
+                temp->next = newNode;
+            } else if (pos >= index) {
+                /*
+                Node* temp = tail;
+                for (int i = 1; i < pos-1; i++){
+                    temp = temp->next;
+                }
+                newNode->next = temp->next;
+                newNode->prev = temp;
+                temp->next->prev = newNode;
+                temp->next = newNode;
+                 */
+            }
+            length++;
+        }
+        return true;
+    } else if (pos >size()+1){
+        return false;
+    }
+
 }
 
 template<typename T>
