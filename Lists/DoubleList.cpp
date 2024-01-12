@@ -105,42 +105,96 @@ bool DoubleList<T>::insert(T value, int pos){
             int index = size()/2;
             if (pos <= index){
                 Node* temp = head;
-                for (int i = 1; i < pos-1; i++){
+                for (int i = 1; i < pos-1; i++)
                     temp = temp->next;
-                }
                 newNode->next = temp->next;
                 newNode->prev = temp;
                 temp->next->prev = newNode;
                 temp->next = newNode;
-            } else if (pos >= index) {
-                /*
+            } else if (pos > index) {
                 Node* temp = tail;
-                for (int i = 1; i < pos-1; i++){
-                    temp = temp->next;
-                }
-                newNode->next = temp->next;
-                newNode->prev = temp;
-                temp->next->prev = newNode;
-                temp->next = newNode;
-                 */
+                int tailPos = size() - pos;
+                for (int i = 1; i < tailPos+1; i++)
+                    temp = temp->prev;
+                newNode->prev = temp->prev;
+                newNode->next = temp;
+                temp->prev->next = newNode;
+                temp->prev = newNode;
             }
             length++;
         }
         return true;
-    } else if (pos >size()+1){
+    } else if (pos > size()+1){
         return false;
     }
-
 }
 
 template<typename T>
 bool DoubleList<T>::remove(int pos){
-    //TODO
+    if (pos <= size()){
+        if (pos == size()){
+            pop_back();
+        } else if (pos == 1) {
+            pop_front();
+        } else {
+            Node* popNode;
+            int index = size()/2;
+            if (pos <= index){
+                Node* temp = head;
+                for (int i = 1; i < pos-1; i++)
+                    temp = temp->next;
+                popNode = temp->next;
+                temp->next = popNode->next;
+                popNode->next->prev = temp;
+                popNode->killself();
+            } else if (pos > index) {
+                Node* temp = tail;
+                int tailPos = size() - pos;
+                for (int i = 1; i < tailPos; i++)
+                    temp = temp->prev;
+                popNode = temp->prev;
+                temp->prev = popNode->prev;
+                popNode->prev->next = temp;
+                popNode->killself();
+            }
+            length--;
+        }
+        return true;
+    } else if (pos > size()){
+        return false;
+    }
 }
 
 template<typename T>
 T& DoubleList<T>::operator[](int pos){
-    //TODO
+    if (pos <= size()){
+        if (pos == size()){
+            return tail->data;
+        } else if (pos == 1) {
+            return head->data;
+        } else {
+            Node* showNode;
+            int index = size()/2;
+            if (pos <= index){
+                Node* temp = head;
+                for (int i = 1; i < pos-1; i++)
+                    temp = temp->next;
+                showNode = temp->next;
+                return showNode->data;
+            } else if (pos > index) {
+                Node* temp = tail;
+                int tailPos = size() - pos;
+                for (int i = 1; i < tailPos; i++)
+                    temp = temp->prev;
+                showNode = temp->prev;
+                return showNode->data;
+            }
+        }
+    } else if (is_empty()){
+        throw runtime_error("No elements in the list");
+    } else if (pos > size()){
+        throw runtime_error("Invalid position");
+    }
 }
 
 template<typename T>
