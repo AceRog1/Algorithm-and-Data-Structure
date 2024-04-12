@@ -15,9 +15,13 @@ int main(){
     list.push_back(3);
     list.push_back(4);
     list.push_back(5);
+    list.push_back(6);
+    list.push_back(7);
+    list.push_back(8);
 
     std::cout << list.name() << std::endl;
-    std::cout << list.size() << std::endl;
+    std::cout << list.insert(69, 9) << std::endl;
+    std::cout << list.name() << std::endl;
 
     return 0;
 }
