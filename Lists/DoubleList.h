@@ -7,6 +7,39 @@
 
 #include "List.h"
 
+
+template<typename T>
+class DoubleList;
+
+
+template<typename T>
+class DoubleListIterator {
+private:
+    typename DoubleList<T>::Node *current;
+public:
+    DoubleListIterator(){
+        current = nullptr;
+    }
+    explicit DoubleListIterator(typename DoubleList<T>::Node *pointer){
+        current = pointer;
+    }
+    bool operator!=(const DoubleListIterator<T> &other){
+        return current != other.current;
+    }
+    DoubleListIterator &operator++(){
+        current = current->next;
+        return *this;
+    }
+    DoubleListIterator &operator--(){
+        current = current->prev;
+        return *this;
+    }
+    T operator*(){
+        return current->data;
+    }
+};
+
+
 template<typename T>
 class DoubleList : public List<T>{
 private:
@@ -52,6 +85,19 @@ public:
     void reverse() override;
     std::string name() override;
     ~DoubleList();
+public:
+    friend class DoubleListIterator<T>;
+    typedef DoubleListIterator<T> iterator;
+public:
+    iterator beginFront(){
+        return iterator(this->head);
+    }
+    iterator beginBack(){
+        return iterator(this->tail);
+    }
+    iterator end(){
+        return iterator(nullptr);
+    }
 };
 
 

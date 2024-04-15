@@ -10,7 +10,7 @@
 int main(){
 
     DoubleList<int> list;
-    /*
+
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
@@ -19,8 +19,16 @@ int main(){
     list.push_back(6);
     list.push_back(7);
     list.push_back(8);
-    list.push_back(9);
 
+    std::cout << list.name() << std::endl;
+
+    DoubleList<int>::iterator iter;
+
+    for(iter = list.beginFront(); iter != list.end(); ++iter){
+        std::cout << *iter << std::endl;
+    }
+
+    /*
     std::cout << "Front: " << list.front() << std::endl;
     std::cout << "Back: " << list.back() << std::endl;
     std::cout << "Size: " << list.size() << std::endl;
@@ -29,8 +37,6 @@ int main(){
 
     std::cout << std::endl;
     */
-
-    std::cout << list[10] << std::endl;
 
 
     return 0;
