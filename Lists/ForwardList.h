@@ -8,6 +8,32 @@
 #include "List.h"
 
 template<typename T>
+class ForwardList;
+
+template <typename T>
+class ForwardListInterator{
+private:
+    typename ForwardList<T>::Node* current;
+public:
+    ForwardListInterator(){
+        current = nullptr;
+    }
+    explicit ForwardListInterator(typename ForwardList<T>::Node* head){
+        current = head;
+    }
+    bool operator!=(const ForwardListInterator<T> &other){
+        return current != other.current;
+    }
+    ForwardListInterator &operator++() {
+        current = current->next;
+        return *this;
+    }
+    T operator*(){
+        return current->data;
+    }
+};
+
+template<typename T>
 class ForwardList : public List<T>{
 private:
     struct Node{
@@ -47,6 +73,16 @@ public:
     void reverse() override;
     std::string name() override;
     ~ForwardList();
+public:
+    friend class ForwardListInterator<T>;
+    typedef ForwardListInterator<T> iterator;
+public:
+    iterator begin() {
+        return iterator(this->head);
+    }
+    iterator end() {
+        return iterator(nullptr);
+    }
 };
 
 

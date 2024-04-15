@@ -112,7 +112,7 @@ bool ForwardList<T>::insert(T value, int pos){
     } else if (pos > size()+1){
         return false;
     }
-    //return false;
+    return false;
 }
 
 template<typename T>
