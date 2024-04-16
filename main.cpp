@@ -22,7 +22,7 @@ int main(){
 
     CircularListIterator<int> iter;
 
-    for (iter = list.beginFront(); iter != list.end(); ++iter){
+    for (iter = list.beginBack(); iter != list.end(); --iter){
         std::cout << *iter << std::endl;
     }
 

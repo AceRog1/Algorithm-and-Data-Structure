@@ -38,13 +38,6 @@ void CircularList<T>::push_front(T value) {
         newNode->prev = cptr;
         cptr->next->prev = newNode;
         cptr->next = newNode;
-        /*
-        tail->next = newNode;
-        head->prev = newNode;
-        newNode->next = head;
-        newNode->prev = tail;
-        head = newNode;
-         */
     }
     length++;
 }
@@ -62,13 +55,6 @@ void CircularList<T>::push_back(T value) {
         newNode->prev = cptr->prev;
         cptr->prev->next = newNode;
         cptr->prev = newNode;
-        /*
-        tail->next = newNode;
-        head->prev = newNode;
-        newNode->next = head;
-        newNode->prev = tail;
-        tail = newNode;
-         */
     }
     length++;
 }
@@ -210,10 +196,6 @@ int CircularList<T>::size() {
 
 template<typename T>
 void CircularList<T>::clear() {
-    /* Intento con for loop
-    for (int i = 0; i < length+1; i++)
-        pop_front();
-    */
     while(cptr->next != cptr)
         pop_front();
 }
