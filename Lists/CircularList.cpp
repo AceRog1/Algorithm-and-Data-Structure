@@ -8,35 +8,43 @@ using namespace std;
 
 template<typename T>
 CircularList<T>::CircularList() {
-    head = nullptr;
-    tail = nullptr;
     length = 0;
+    centinel.data = T();
+    cptr = &centinel;
+    cptr->next = nullptr;
+    cptr->prev = nullptr;
 }
 
 template<typename T>
 T CircularList<T>::front() {
-    return head->data;
+    return centinel.next->data;
 }
 
 template<typename T>
 T CircularList<T>::back() {
-    return tail->data;
+    return centinel.prev->data;
 }
 
 template<typename T>
 void CircularList<T>::push_front(T value) {
     Node *newNode = new Node(value);
     if (length == 0){
-        newNode->next = newNode;
-        newNode->prev = newNode;
-        head = newNode;
-        tail = newNode;
+        newNode->next = cptr;
+        newNode->prev = cptr;
+        cptr->next = newNode;
+        cptr->prev = newNode;
     } else {
+        newNode->next = cptr->next;
+        newNode->prev = cptr;
+        cptr->next->prev = newNode;
+        cptr->next = newNode;
+        /*
         tail->next = newNode;
         head->prev = newNode;
         newNode->next = head;
         newNode->prev = tail;
         head = newNode;
+         */
     }
     length++;
 }
@@ -45,16 +53,22 @@ template<typename T>
 void CircularList<T>::push_back(T value) {
     Node *newNode = new Node(value);
     if (length == 0){
-        newNode->next = newNode;
-        newNode->prev = newNode;
-        head = newNode;
-        tail = newNode;
+        newNode->next = cptr;
+        newNode->prev = cptr;
+        cptr->next = newNode;
+        cptr->prev = newNode;
     } else {
+        newNode->next = cptr;
+        newNode->prev = cptr->prev;
+        cptr->prev->next = newNode;
+        cptr->prev = newNode;
+        /*
         tail->next = newNode;
         head->prev = newNode;
         newNode->next = head;
         newNode->prev = tail;
         tail = newNode;
+         */
     }
     length++;
 }
@@ -64,22 +78,21 @@ T CircularList<T>::pop_front() {
     if (length == 0) {
         throw runtime_error("No elements in the list");
     } else if (length == 1) {
-        Node *popNode = head;
-        T num = popNode->data;
-        head = nullptr;
-        tail = nullptr;
+        Node *popNode = cptr->next;
+        T val = popNode->data;
+        cptr->next = cptr;
+        cptr->prev = cptr;
         popNode->killself();
         length--;
-        return num;
+        return val;
     } else {
-        Node *popNode = head;
-        T num = popNode->data;
-        head = popNode->next;
-        head->prev = tail;
-        tail->next = head;
+        Node *popNode = cptr->next;
+        T val = popNode->data;
+        cptr->next = popNode->next;
+        popNode->next->prev = cptr;
         popNode->killself();
         length--;
-        return num;
+        return val;
     }
 }
 
@@ -88,30 +101,27 @@ T CircularList<T>::pop_back() {
     if (length == 0) {
         throw runtime_error("No elements in the list");
     } else if (length == 1) {
-        Node *popNode = tail;
-        T num = popNode->data;
-        head = nullptr;
-        tail = nullptr;
+        Node *popNode = cptr->prev;
+        T val = popNode->data;
+        cptr->next = cptr;
+        cptr->prev = cptr;
         popNode->killself();
         length--;
-        return num;
+        return val;
     } else {
-        Node *popNode = tail;
-        T num = popNode->data;
-        tail = popNode->prev;
-        tail->next = head;
-        head->prev = tail;
+        Node *popNode = cptr->prev;
+        T val = popNode->data;
+        cptr->prev = popNode->prev;
+        popNode->prev->next = cptr;
         popNode->killself();
         length--;
-        return num;
+        return val;
     }
 }
 
 template<typename T>
 bool CircularList<T>::insert(T value, int pos) {
-    if (is_empty()) {
-        return false;
-    } else {
+    if (is_empty() == false) {
         if (pos < 0 || pos > size()){
             return false;
         } else if (pos == 0){
@@ -122,7 +132,7 @@ bool CircularList<T>::insert(T value, int pos) {
             return true;
         } else {
             Node *newNode = new Node(value);
-            Node *temp = head;
+            Node *temp = cptr->next;
             for (int i = 0; i < pos-1; i++)
                 temp = temp->next;
             newNode->next = temp->next;
@@ -132,14 +142,14 @@ bool CircularList<T>::insert(T value, int pos) {
             length++;
             return true;
         }
+    } else {
+        return false;
     }
 }
 
 template<typename T>
 bool CircularList<T>::remove(int pos) {
-    if (is_empty()) {
-        return false;
-    } else {
+    if (is_empty() == false) {
         if (pos < 0 || pos >= size()){
             return false;
         } else if (pos == 0){
@@ -149,7 +159,7 @@ bool CircularList<T>::remove(int pos) {
             pop_back();
             return true;
         } else {
-            Node *popNode = head;
+            Node *popNode = cptr->next;
             for (int i = 0; i < pos; i++)
                 popNode = popNode->next;
             popNode->next->prev = popNode->prev;
@@ -158,29 +168,30 @@ bool CircularList<T>::remove(int pos) {
             length--;
             return true;
         }
+    } else {
+        return false;
     }
 }
 
 template<typename T>
 T& CircularList<T>::operator[](int pos) {
-    if (pos <= length && pos >= 0){
-        if (pos == 0){
-            return head->data;
-        } else if (pos == length){
-            return tail->data;
+    if (is_empty() == false){
+        if (pos < length && pos >= 0){
+            if (pos == 0){
+                return cptr->next->data;
+            } else if (pos == length-1){
+                return cptr->prev->data;
+            } else {
+                Node *temp = cptr->next;
+                for (int i = 0; i < pos; i++)
+                    temp = temp->next;
+                return temp->data;
+            }
         } else {
-            Node *temp = head;
-            for (int i = 0; i < pos; i++)
-                temp = temp->next;
-            return temp->data;
+            throw runtime_error("Invalid Position");
         }
     } else {
-        if (pos > size() || pos < 0){
-            throw runtime_error("Invalid Position");
-        } else if (size() == 0){
-            throw runtime_error("No elements in the list");
-        }
-        throw runtime_error("ERROR");
+        throw runtime_error("No elements in the list");
     }
 }
 
@@ -199,9 +210,12 @@ int CircularList<T>::size() {
 
 template<typename T>
 void CircularList<T>::clear() {
-    for (int i = 0; i < length; i++){
+    /* Intento con for loop
+    for (int i = 0; i < length+1; i++)
         pop_front();
-    }
+    */
+    while(cptr->next != cptr)
+        pop_front();
 }
 
 template<typename T>
@@ -216,40 +230,36 @@ bool CircularList<T>::is_sorted() {
 
 template<typename T>
 void CircularList<T>::reverse() {
-     if (size() == 1){
-        Node *temp = head->next;
-        head->next = head->prev;
-        head->prev = temp;
-    } else if (size() == length){
-        Node *tempA = head;
-        Node *tempB = head->next;
+    if (size() == 1){
+        // In this circularList, if there is just one element in the list, there is nothing to change.
+    } else if (is_empty() == false){
+        Node *tempA = cptr->next;
+        Node *tempB = cptr->next->next;
         do {
             Node *temp = tempA->prev;
             tempA->next = tempA->prev;
             tempA->prev = temp;
             tempA = tempB;
             tempB = tempB->next;
-        } while (tempB->prev != head);
-        Node *temp = head;
-        head = tail;
-        tail = temp;
+        } while (tempB->prev != cptr);
+        Node *temp = cptr->next;
+        cptr->next = cptr->prev;
+        cptr->prev = temp;
     } else {
          throw runtime_error("No elements in the List");
-     }
+    }
 }
 
 template<typename T>
 string CircularList<T>::name() {
-    Node *temp = head;
+    Node* temp = cptr;
+    temp = temp->next;
     string list;
-    for (int i = 0; i < length; i++){
-        if (temp == tail){
-            list = list + to_string(temp->data);
-        } else {
-            list = list + to_string(temp->data) + ", ";
-        }
+    while(temp->next != cptr){
+        list = list + to_string(temp->data) + " , ";
         temp = temp->next;
     }
+    list = list + to_string(temp->data);
     return list;
 }
 

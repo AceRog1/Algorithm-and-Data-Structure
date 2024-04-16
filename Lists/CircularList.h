@@ -7,6 +7,40 @@
 
 
 #include "List.h"
+#include <string>
+
+
+template<typename T>
+class CircularList;
+
+
+template<typename T>
+class CircularListIterator{
+private:
+    typename CircularList<T>::Node *current;
+public:
+    CircularListIterator(){
+        current = nullptr;
+    }
+    explicit CircularListIterator(typename CircularList<T>::Node *pionter){
+        current = pionter;
+    }
+    bool operator!=(const CircularListIterator<T> &other){
+        return current != other.current;
+    }
+    CircularListIterator operator++(){
+        current = current->next;
+        return *this;
+    }
+    CircularListIterator operator--(){
+        current = current->prev;
+        return *this;
+    }
+    T operator*(){
+        return current->data;
+    }
+};
+
 
 template<typename T>
 class CircularList : public List<T>{
@@ -32,8 +66,8 @@ private:
     };
 private:
     int length;
-    Node* head;
-    Node* tail;
+    Node centinel;
+    Node *cptr;
 public:
     CircularList();
     T front() override;
@@ -53,6 +87,19 @@ public:
     void reverse() override;
     std::string name() override;
     ~CircularList();
+public:
+    friend class CircularListIterator<T>;
+    typedef CircularListIterator<T> iterator;
+public:
+    iterator beginFront(){
+        return iterator(centinel.next);
+    }
+    iterator beginBack(){
+        return iterator(centinel.prev);
+    }
+    iterator end(){
+        return iterator(cptr);
+    }
 };
 
 #endif //ALGORITHMANDDATASTRUCTURE_CIRCULARLIST_H
