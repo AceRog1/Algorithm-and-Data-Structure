@@ -2,8 +2,10 @@
 // Created by alejandro on 21/10/2023.
 //
 
-#include "ForwardList.h"
 #include <string>
+#include <sstream>
+#include "ForwardList.h"
+
 
 using namespace std;
 
@@ -232,18 +234,16 @@ string ForwardList<T>::name(){
     if (is_empty()){
         throw runtime_error("No elements in the list");
     } else {
+        stringstream ss;
         Node* temp = head;
-        string nameString;
         for(int i = 0; i < size(); i++){
-            string part = to_string(temp->data);
-            if (i+1 == size()){
-                nameString += part;
-            } else {
-                nameString += part + ", ";
-            }
+            if (i+1 == size())
+                ss << temp->data;
+            else
+                ss << temp->data << ", ";
             temp = temp->next;
         }
-        return nameString;
+        return ss.str();
     }
 }
 
