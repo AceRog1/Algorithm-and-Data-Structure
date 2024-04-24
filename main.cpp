@@ -9,20 +9,20 @@
 
 int main(){
 
-    DoubleList<int> list;
+    DoubleList<string> list;
 
-    list.push_back(1);
-    list.push_back(2);
-    list.push_back(3);
-    list.push_back(4);
-    list.push_back(5);
-    list.push_back(6);
-    list.push_back(7);
-    list.push_back(8);
+    list.push_back("1");
+    list.push_back("2");
+    list.push_back("3");
+    list.push_back("4");
+    list.push_back("5");
+    list.push_back("6");
+    list.push_back("7");
+    list.push_back("8");
 
     std::cout << list.name() << std::endl;
 
-    DoubleList<int>::iterator iter;
+    DoubleList<string>::iterator iter;
 
     for(iter = list.beginFront(); iter != list.end(); ++iter){
         std::cout << *iter << std::endl;

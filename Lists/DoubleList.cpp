@@ -2,6 +2,7 @@
 // Created by alejandro on 21/10/2023.
 //
 
+#include <sstream>
 #include "DoubleList.h"
 
 using namespace std;
@@ -265,17 +266,16 @@ void DoubleList<T>::reverse(){
 
 template<typename T>
 string DoubleList<T>::name(){
+    stringstream ss;
     Node* temp = head;
-    string list;
     do {
-        if (temp == head){
-            list = list + to_string(temp->data);
-        } else {
-            list = list + ", " + to_string(temp->data);
-        }
+        if (temp == head)
+            ss << temp->data;
+        else
+            ss << ", " << temp->data;
         temp = temp->next;
     } while (temp != nullptr);
-    return list;
+    return ss.str();
 }
 
 template<typename T>
