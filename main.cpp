@@ -8,23 +8,25 @@
 
 int main(){
 
-    CircularList<int> list;
+    CircularList<string> list;
 
-    list.push_back(0);
-    list.push_back(1);
-    list.push_back(2);
-    list.push_back(3);
-    list.push_back(4);
-    list.push_back(5);
-    list.push_back(6);
+    list.push_back("0");
+    list.push_back("1");
+    list.push_back("2");
+    list.push_back("3");
+    list.push_back("4");
+    list.push_back("5");
+    list.push_back("6");
 
     std::cout << list.name() << std::endl;
 
-    CircularListIterator<int> iter;
+    CircularListIterator<string> iter;
+
 
     for (iter = list.beginBack(); iter != list.end(); --iter){
         std::cout << *iter << std::endl;
     }
+
 
     return 0;
 }

@@ -2,6 +2,7 @@
 // Created by alejandro on 21/10/2023.
 //
 
+#include <sstream>
 #include "CircularList.h"
 
 using namespace std;
@@ -234,15 +235,14 @@ void CircularList<T>::reverse() {
 
 template<typename T>
 string CircularList<T>::name() {
-    Node* temp = cptr;
-    temp = temp->next;
-    string list;
+    stringstream ss;
+    Node* temp = cptr->next;
     while(temp->next != cptr){
-        list = list + to_string(temp->data) + " , ";
+        ss << temp->data << " , ";
         temp = temp->next;
     }
-    list = list + to_string(temp->data);
-    return list;
+    ss << temp->data;
+    return ss.str();
 }
 
 template<typename T>
