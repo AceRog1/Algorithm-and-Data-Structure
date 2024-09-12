@@ -73,6 +73,9 @@ public:
     void reverse() override;
     std::string name() override;
     ~ForwardList();
+private:
+    friend void merge(ForwardList<T>* list, int left, int mid, int right);
+    friend void mergeSort(ForwardList<T>* list, int left, int right);
 public:
     friend class ForwardListInterator<T>;
     typedef ForwardListInterator<T> iterator;
@@ -84,6 +87,65 @@ public:
         return iterator(nullptr);
     }
 };
+
+template<typename T>
+void merge(ForwardList<T>*& list, int left, int mid, int right){
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    typename ForwardList<T>::Node* temp11 = list->head;
+    typename ForwardList<T>::Node* temp12 = list->head;
+
+    ForwardList<T>* L, R;
+
+    for(size_t i = 0; i < n1; i++){
+        T val = temp11->data;
+        L->push_back(val);
+        temp11 = temp11->next;
+        temp12 = temp12->next;
+    }
+    for(size_t i = 0; i < n2; i++){
+        T val = temp12->data;
+        R->push_back(val);
+        temp12 = temp12->next;
+    }
+
+    delete temp11;
+    delete temp12;
+
+    typename ForwardList<T>::Node* temp21 = list->head; // i
+    typename ForwardList<T>::Node* temp22 = list->head; // j
+    typename ForwardList<T>::Node* temp23 = list->head; // k
+
+    int i = 0, j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            //arr[k] = L[i];
+            temp21 = temp21->next;
+            i++;
+        }
+        else {
+            //arr[k] = R[j];
+            temp22 = temp22->next;
+            j++;
+        }
+        temp23 = temp23->next;
+        k++;
+    }
+
+}
+
+template<typename T>
+void mergeSort(ForwardList<T>* list, int left, int right){
+    if(left >= right)
+        return;
+    int mid = left + (right - left)/2;
+    mergeSort(list, left, mid);
+    mergeSort(list, mid, right);
+    merge(list,left, mid, right);
+}
 
 
 #endif //ALGORITHMANDDATASTRUCTURE_FORWARDLIST_H

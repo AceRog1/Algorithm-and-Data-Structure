@@ -195,7 +195,16 @@ void ForwardList<T>::sort(){
 
 template<typename T>
 bool ForwardList<T>::is_sorted(){
-    //TODO
+    Node* temp1 = head;
+    Node* temp2 = head->next;
+
+    while(temp2 != nullptr){
+        if (temp1 > temp2)
+            return false;
+        temp1 = temp2;
+        temp2 = temp2->next;
+    }
+    return true;
 }
 
 template<typename T>
