@@ -11,24 +11,26 @@
 
 
 int main(){
-
-    ForwardList<string> lista;
-    lista.push_front("1");
-    lista.push_front("2");
-    lista.push_front("3");
-    lista.push_front("4");
-    lista.push_front("5");
-    lista.push_front("6");
-    lista.push_front("7");
-    lista.push_front("8");
+    ForwardList<int> lista;
+    lista.push_front(8);
+    lista.push_front(7);
+    lista.push_front(6);
+    lista.push_front(5);
+    lista.push_front(4);
+    lista.push_front(3);
+    lista.push_front(2);
+    lista.push_front(1);
 
     std::cout << lista.name() << std::endl;
 
-    ForwardList<string>::iterator iter;
+    ForwardList<int>::iterator iter;
 
     for (iter = lista.begin(); iter != lista.end(); ++iter){
-        std::cout << *iter << std::endl;
+        std::cout << *iter << " -> ";
     }
+    std::cout << "\n";
+
+    lista.sort();
 
     return 0;
 }

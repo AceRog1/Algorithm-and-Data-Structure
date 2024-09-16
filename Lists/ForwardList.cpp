@@ -4,8 +4,8 @@
 
 #include <string>
 #include <sstream>
+#include <type_traits>
 #include "ForwardList.h"
-
 
 using namespace std;
 
@@ -190,21 +190,40 @@ void ForwardList<T>::clear(){
 
 template<typename T>
 void ForwardList<T>::sort(){
-    //TODO
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        auto sortList = new ForwardList<T>();
+        mergeSort(this, sortList, 0, length-1);
+        Node* sortedNode = sortList->head;
+        Node* originalNode = head;
+
+        while (sortedNode != nullptr && originalNode != nullptr) {
+            originalNode->data = sortedNode->data;
+            sortedNode = sortedNode->next;
+            originalNode = originalNode->next;
+        }
+
+        delete sortList;
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
+    }
 }
 
 template<typename T>
 bool ForwardList<T>::is_sorted(){
-    Node* temp1 = head;
-    Node* temp2 = head->next;
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        Node* temp1 = head;
+        Node* temp2 = head->next;
 
-    while(temp2 != nullptr){
-        if (temp1 > temp2)
-            return false;
-        temp1 = temp2;
-        temp2 = temp2->next;
+        while(temp2 != nullptr){
+            if (temp1->data > temp2->data)
+                return false;
+            temp1 = temp2;
+            temp2 = temp2->next;
+        }
+        return true;
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
     }
-    return true;
 }
 
 template<typename T>

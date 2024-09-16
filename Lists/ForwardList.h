@@ -74,8 +74,8 @@ public:
     std::string name() override;
     ~ForwardList();
 private:
-    friend void merge(ForwardList<T>* list, int left, int mid, int right);
-    friend void mergeSort(ForwardList<T>* list, int left, int right);
+    friend void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);
+    friend void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);
 public:
     friend class ForwardListInterator<T>;
     typedef ForwardListInterator<T> iterator;
@@ -89,14 +89,15 @@ public:
 };
 
 template<typename T>
-void merge(ForwardList<T>*& list, int left, int mid, int right){
+void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right){
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
     typename ForwardList<T>::Node* temp11 = list->head;
     typename ForwardList<T>::Node* temp12 = list->head;
 
-    ForwardList<T>* L, R;
+    auto L = new ForwardList<T>();
+    auto R = new ForwardList<T>();
 
     for(size_t i = 0; i < n1; i++){
         T val = temp11->data;
@@ -110,41 +111,57 @@ void merge(ForwardList<T>*& list, int left, int mid, int right){
         temp12 = temp12->next;
     }
 
-    delete temp11;
-    delete temp12;
-
-    typename ForwardList<T>::Node* temp21 = list->head; // i
-    typename ForwardList<T>::Node* temp22 = list->head; // j
-    typename ForwardList<T>::Node* temp23 = list->head; // k
+    typename ForwardList<T>::Node* temp21 = L->head; // i
+    typename ForwardList<T>::Node* temp22 = R->head; // j
+    //typename ForwardList<T>::Node* temp23 = list->head; // k
 
     int i = 0, j = 0;
     int k = left;
 
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
+        if (temp21->data <= temp22->data) {
             //arr[k] = L[i];
+            sortList->push_back(temp21->data);
             temp21 = temp21->next;
             i++;
         }
         else {
             //arr[k] = R[j];
+            sortList->push_back(temp22->data);
             temp22 = temp22->next;
             j++;
         }
-        temp23 = temp23->next;
+        //temp23 = temp23->next;
         k++;
     }
+
+    while (i < n1) {
+        //arr[k] = L[i];
+        sortList->push_back(temp21->data);
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        //arr[k] = R[j];
+        sortList->push_back(temp22->data);
+        j++;
+        k++;
+    }
+
+    delete R;
+    delete L;
 
 }
 
 template<typename T>
-void mergeSort(ForwardList<T>* list, int left, int right){
+void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right){
     if(left >= right)
         return;
     int mid = left + (right - left)/2;
-    mergeSort(list, left, mid);
-    mergeSort(list, mid, right);
-    merge(list,left, mid, right);
+    mergeSort(list, sortList, left, mid);
+    mergeSort(list, sortList, mid+1, right);
+    merge(list, sortList, left, mid, right);
 }
 
 
