@@ -89,7 +89,7 @@ public:
 };
 
 template<typename T>
-void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right){
+void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);/*{
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
@@ -152,17 +152,17 @@ void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, 
     delete R;
     delete L;
 
-}
+}*/
 
 template<typename T>
-void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right){
+void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);/*{
     if(left >= right)
         return;
     int mid = left + (right - left)/2;
     mergeSort(list, sortList, left, mid);
     mergeSort(list, sortList, mid+1, right);
     merge(list, sortList, left, mid, right);
-}
+}*/
 
 
 #endif //ALGORITHMANDDATASTRUCTURE_FORWARDLIST_H
