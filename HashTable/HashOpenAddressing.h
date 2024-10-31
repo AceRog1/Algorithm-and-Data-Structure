@@ -6,15 +6,35 @@
 #define ALGORITHMANDDATASTRUCTURE_HASHOPENADDRESSING_H
 
 #include <iostream>
+#include <utility>
+#include <string>
+#include <type_traits>
 
+const float MAXFILLFACTOR = 0.7;
+
+template<typename T, typename K>
 class HashOpenAddressing {
 private:
-
-private:
-    int length;
+    size_t length;
+    int capacity;
+    std::pair<T, K>* hashTable;
 public:
-    HashOpenAddressing();
+    explicit HashOpenAddressing(int cap = 13);
+    int size();
+    size_t max_size();
+    void insert(T key, K value);
+    bool remove(T key);
+    std::pair<T, K> search(T key);
+    std::string print();
+    void clear();
+    bool empty();
+    std::pair<T, K> operator [](T key);
+    HashOpenAddressing& operator=(HashOpenAddressing<T, K> other);
+    std::pair<T, K> extraxt(T key);
     ~HashOpenAddressing();
+private:
+    void rehashing();
+    size_t hash(T key);
 };
 
 
