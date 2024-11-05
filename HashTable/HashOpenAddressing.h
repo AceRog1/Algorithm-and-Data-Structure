@@ -8,9 +8,14 @@
 #include <iostream>
 #include <utility>
 #include <string>
+#include <tuple>
 #include <type_traits>
 
-const float MAXFILLFACTOR = 0.7;
+const double MAXFILLFACTOR = 0.7;
+
+enum class state {
+    NTH, BKT, DLT
+};
 
 template<typename T, typename K>
 class HashOpenAddressing {
@@ -25,7 +30,6 @@ public:
     void insert(T key, K value);
     bool remove(T key);
     std::pair<T, K> search(T key);
-    std::string print();
     void clear();
     bool empty();
     std::pair<T, K> operator [](T key);

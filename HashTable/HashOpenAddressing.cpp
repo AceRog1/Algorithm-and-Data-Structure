@@ -25,15 +25,10 @@ size_t HashOpenAddressing<T, K>::max_size() {
 
 template<typename T, typename K>
 void HashOpenAddressing<T, K>::insert(T key, K value) { // TODO
-    if (length > 0){
-        if (length/capacity > MAXFILLFACTOR)
-            rehashing();
-        size_t position = hash(key);
-        hashTable[position] = value;
-    } else {
-        size_t position = hash(key);
-        hashTable[position] = value;
-    }
+    if (capacity*MAXFILLFACTOR < length)
+        rehashing();
+    size_t position = hash(key);
+    hashTable[position] = (key, value);
     length++;
 }
 
@@ -44,11 +39,6 @@ bool HashOpenAddressing<T , K>::remove(T key) {
 
 template<typename T, typename K>
 pair<T, K> HashOpenAddressing<T, K>::search(T key) {
-    // TODO
-}
-
-template<typename T, typename K>
-string HashOpenAddressing<T, K>::print() {
     // TODO
 }
 
@@ -84,7 +74,9 @@ HashOpenAddressing<T, K>::~HashOpenAddressing() {
 
 template<typename T, typename K>
 void HashOpenAddressing<T, K>::rehashing() {
-    // TODO
+    capacity = capacity*2;
+    auto* new_hashTable = new pair<T, K>[capacity];
+
 }
 
 template<typename T, typename K>
