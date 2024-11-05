@@ -9,6 +9,8 @@
 
 using namespace std;
 
+
+// FUNCION MERGE
 template<typename T>
 void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right){
     int n1 = mid - left + 1;
@@ -75,6 +77,7 @@ void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, 
 
 }
 
+// FUNCION MERGE_SORT
 template<typename T>
 void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right){
     if(left >= right)
