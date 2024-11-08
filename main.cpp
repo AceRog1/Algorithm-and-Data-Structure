@@ -3,10 +3,21 @@
 //
 
 #include <iostream>
+#include <string>
+#include "HashTable/HashOpenAddressing.h"
+#include "HashTable/HashOpenAddressing.cpp"
 
 int main(){
 
-    std::cout << "Hello World!" << std::endl;
+
+    HashOpenAddressing<int, std::string> hash;
+    hash.insert(4, "Hello");
+    hash.insert(8, "Hello");
+    hash.insert(1, "Hello");
+
+
+    hash.remove(4);
+
 
     return 0;
 }

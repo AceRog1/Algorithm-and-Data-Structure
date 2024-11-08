@@ -14,32 +14,59 @@
 const double MAXFILLFACTOR = 0.7;
 
 enum class state {
-    NTH, BKT, DLT
+    NTH, STH, DLT
 };
+/// NTH -> Nothing |
+/// STH -> Something |
+/// DLT -> Deleted
 
-template<typename T, typename K>
+template<typename TK, typename TV>
 class HashOpenAddressing {
 private:
     size_t length;
     int capacity;
-    std::pair<T, K>* hashTable;
+    //std::pair<T, K>* hashTable;
+    std::tuple<TK, TV, state>** hash_table;
 public:
     explicit HashOpenAddressing(int cap = 13);
     int size();
     size_t max_size();
-    void insert(T key, K value);
-    bool remove(T key);
-    std::pair<T, K> search(T key);
+    void insert(TK key, TV value);
+    bool remove(TK key);
+    std::pair<TK, TV> search(TK key);
     void clear();
     bool empty();
-    std::pair<T, K> operator [](T key);
-    HashOpenAddressing& operator=(HashOpenAddressing<T, K> other);
-    std::pair<T, K> extraxt(T key);
+    TV operator [](TK key);
+    HashOpenAddressing& operator=(HashOpenAddressing<TK, TV> other);
+    std::pair<TK, TV> extraxt(TK key);
     ~HashOpenAddressing();
 private:
     void rehashing();
-    size_t hash(T key);
+    //friend size_t hashFuc(int key, int cap);
+    size_t hashFunc(TK key){
+        if (key == 0) return 0;
+        else return key%capacity;
+    }
 };
+
+//template<typename T>
+//size_t hashFuc(T key, int cap);
+//
+//template<>
+//size_t hashFuc(int key, int cap);
+//
+//template<>
+//size_t hashFuc(char key, int cap);
+//
+//template<>
+//size_t hashFuc(double key, int cap);
+//
+//template<>
+//size_t hashFuc(float key, int cap);
+//
+//template<>
+//size_t hashFuc(std::string key, int cap);
+
 
 
 #endif //ALGORITHMANDDATASTRUCTURE_HASHOPENADDRESSING_H
