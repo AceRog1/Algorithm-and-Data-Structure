@@ -23,7 +23,7 @@ enum class state {
 template<typename TK, typename TV>
 class HashOpenAddressing {
 private:
-    size_t length;
+    size_t length;//Falta arreglar (tener en cuenta el size_t y el int que no se contradigan)
     int capacity;
     //std::pair<T, K>* hashTable;
     std::tuple<TK, TV, state>** hash_table;
