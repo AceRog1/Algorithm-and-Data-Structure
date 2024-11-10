@@ -5,7 +5,7 @@
 #ifndef ALGORITHMANDDATASTRUCTURE_HASHCHAINING_H
 #define ALGORITHMANDDATASTRUCTURE_HASHCHAINING_H
 
-
+template<typename TK, typename TV>
 class HashChaining {
 
 };
