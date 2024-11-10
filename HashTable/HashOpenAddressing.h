@@ -37,7 +37,6 @@ public:
     void clear();
     bool empty();
     TV operator [](TK key);
-    HashOpenAddressing& operator=(HashOpenAddressing<TK, TV> other);
     std::pair<TK, TV> extraxt(TK key);
     ~HashOpenAddressing();
 private:

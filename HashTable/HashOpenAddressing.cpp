@@ -30,7 +30,11 @@ void HashOpenAddressing<TK, TV>::insert(TK key, TV value) {
     if (length >= capacity * MAXFILLFACTOR)
         rehashing();
     size_t pos = hashFunc(key);
-    while (get<2>(*hash_table[pos % capacity]) == state::STH) {
+    if (key == get<0>(*hash_table[pos]) && get<2>(*hash_table[pos%capacity]) != state::NTH)
+        throw runtime_error("Repeated Key, the Key must be unique");
+    while (get<2>(*hash_table[pos%capacity]) == state::STH) {
+        if (key == get<0>(*hash_table[pos]) && get<2>(*hash_table[pos%capacity]) != state::NTH)
+            throw runtime_error("Repeated Key, the Key must be unique");
         pos++;
         pos = pos % capacity;
     }
@@ -38,31 +42,33 @@ void HashOpenAddressing<TK, TV>::insert(TK key, TV value) {
     length++;
 }
 
-
 template<typename TK, typename TV>
-bool HashOpenAddressing<TK , TV>::remove(TK key) { // TODO
+bool HashOpenAddressing<TK , TV>::remove(TK key) {
     size_t pos = hashFunc(key);
     size_t initialPos = pos;
-    while(get<2>(*hash_table[pos%capacity]) != state::STH && get<0>(*hash_table[pos%capacity]) != key){
+    while(get<2>(*hash_table[pos]) != state::STH || get<0>(*hash_table[pos]) != key){
          pos++;
          if ((pos+1)%capacity == initialPos)
              return false;
          pos = pos % capacity;
     }
-  get<2>(*hash_table[pos]) = state::DLT;
+    get<2>(*hash_table[pos]) = state::DLT;
     length--;
     return true;
 }
 
 template<typename TK, typename TV>
-pair<TK, TV> HashOpenAddressing<TK, TV>::search(TK key) { // TODO
+pair<TK, TV> HashOpenAddressing<TK, TV>::search(TK key) {
     size_t pos = hashFunc(key);
-    if (get<0>(hash_table[pos]) == key && get<2>(hash_table[pos]) == state::STH){
-        pair<TK, TV> element(get<0>(hash_table[pos]), get<1>(hash_table[pos]));
-        return element;
-    } else {
-        throw runtime_error("The element do not exist");
+    size_t initialPos = pos;
+    while(get<2>(*hash_table[pos]) != state::STH || get<0>(*hash_table[pos]) != key){
+        pos++;
+        if ((pos+1)%capacity == initialPos)
+            throw runtime_error("The element do not exist");
+        pos = pos % capacity;
     }
+    pair<TK, TV> element(get<0>(*hash_table[pos]), get<1>(*hash_table[pos]));
+    return element;
 }
 
 template<typename TK, typename TV>
@@ -78,31 +84,32 @@ bool HashOpenAddressing<TK, TV>::empty() {
 }
 
 template<typename TK, typename TV>
-TV HashOpenAddressing<TK, TV>::operator[](TK key) { // TODO
+TV HashOpenAddressing<TK, TV>::operator[](TK key) {
     size_t pos = hashFunc(key);
-    if (get<0>(hash_table[pos]) == key && get<2>(hash_table[pos]) == state::STH){
-        return get<1>(hash_table[pos]);
-    } else {
-        throw runtime_error("The element do not exist");
+    size_t initialPos = pos;
+    while(get<2>(*hash_table[pos]) != state::STH || get<0>(*hash_table[pos]) != key){
+        pos++;
+        if ((pos+1)%capacity == initialPos)
+            throw runtime_error("The element do not exist");
+        pos = pos % capacity;
     }
-}
-
-template<typename T, typename K>
-HashOpenAddressing<T, K>& HashOpenAddressing<T, K>::operator=(HashOpenAddressing<T, K> other) {
-    // TODO
+    return get<1>(*hash_table[pos]);
 }
 
 template<typename TK, typename TV>
-pair<TK, TV> HashOpenAddressing<TK, TV>::extraxt(TK key) { // TODO
+pair<TK, TV> HashOpenAddressing<TK, TV>::extraxt(TK key) {
     size_t pos = hashFunc(key);
-    if (get<0>(hash_table[pos]) == key && get<2>(hash_table[pos]) == state::STH){
-        pair<TK, TV> elementDeleted(get<0>(hash_table[pos]), get<1>(hash_table[pos]));
-        get<2>(hash_table[pos]) = state::DLT;
-        length--;
-        return elementDeleted;
-    } else {
-        throw runtime_error("The element do not exist");
+    size_t initialPos = pos;
+    while(get<2>(*hash_table[pos]) != state::STH || get<0>(*hash_table[pos]) != key){
+        pos++;
+        if ((pos+1)%capacity == initialPos)
+            throw runtime_error("The element do not exist");
+        pos = pos % capacity;
     }
+    pair<TK, TV> element(get<0>(*hash_table[pos]), get<1>(*hash_table[pos]));
+    get<2>(*hash_table[pos]) = state::DLT;
+    length--;
+    return element;
 }
 
 template<typename T, typename K>
@@ -111,16 +118,20 @@ HashOpenAddressing<T, K>::~HashOpenAddressing() {
 }
 
 template<typename TK, typename TV>
-void HashOpenAddressing<TK, TV>::rehashing() { // TODO
-    int newCapacity = capacity*2;
+void HashOpenAddressing<TK, TV>::rehashing() {
+    int oldCapacity = capacity;
+    capacity = capacity*2;
     auto** newHash_table = new tuple<TK, TV, state>*[capacity];
-    for (size_t i = 0; i < newCapacity; i++)
+    for (size_t i = 0; i < capacity; i++)
         newHash_table[i] = new tuple<TK, TV, state>(TK{}, TV{}, state::NTH);
-
-    for (size_t i = 0; i < capacity; i++) {
+    for (size_t i = 0; i < oldCapacity; i++) {
         if (get<2>(*hash_table[i]) == state::STH) {
-            size_t newPos = hashFunc(get<0>(*hash_table[i]));
-            *newHash_table[newPos] = *hash_table[i];
+            size_t pos = hashFunc(get<0>(*hash_table[i]));
+            while (get<2>(*newHash_table[pos%capacity]) == state::STH) {
+                pos++;
+                pos = pos % capacity;
+            }
+            *newHash_table[pos] = *hash_table[i];
         }
     }
     hash_table = newHash_table;
