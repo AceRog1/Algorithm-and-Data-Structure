@@ -10,7 +10,7 @@
 #include <string>
 #include "List.h"
 
-const double MAXFILLFACTOR = 0.5;
+const double MAXFILLFACTOR = 0.2;
 const int MAXCOLISION = 3;
 
 template<typename TK, typename TV>
@@ -28,7 +28,7 @@ public:
     std::pair<TK, TV> search(TK key);
     void clear();
     bool empty();
-    TV& operator[](TK key);
+    TV operator [](TK key);
     std::pair<TK, TV> extract(TK key);
     ~HashChaining();
 private:
