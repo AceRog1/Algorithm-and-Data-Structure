@@ -5,6 +5,7 @@
 #ifndef ALGORITHMANDDATASTRUCTURE_AVLTREE_H
 #define ALGORITHMANDDATASTRUCTURE_AVLTREE_H
 
+#include <vector>
 #include "NodeBT.h"
 
 template<typename T>
@@ -74,7 +75,28 @@ private:
     void displayPostOrder(NodeBT<T> *node); // postOrder
     void displayBFS(NodeBT<T> *node); // BFS
     void displayDFS(NodeBT<T> *node); // DFS
-    void displayPretty(NodeBT<T> *node); // Pretty
+private:
+    void inOrder(std::vector<T>& vec, NodeBT<T>* node){
+        if (node == nullptr)
+            return;
+        inOrder(node->left);
+        vec.pop_back(node->data);
+        inOrder(node->right);
+    }
+    void preOrder(std::vector<T>& vec, NodeBT<T>* node){
+        if (node == nullptr)
+            return;
+        vec.push_back(node->data);
+        preOrder(node->left);
+        preOrder(node->right);
+    }
+    void postOrder(std::vector<T>& vec, NodeBT<T>* node){
+        if (node == nullptr)
+            return;
+        postOrder(node->left);
+        postOrder(node->right);
+        vec.push_back(node->data);
+    }
 private:
     int balancingFactor(NodeBT<T> *node);
     void updateHeight(NodeBT<T> *node);

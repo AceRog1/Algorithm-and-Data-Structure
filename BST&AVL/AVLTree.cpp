@@ -72,7 +72,7 @@ int AVLTree<T>::size(NodeBT<T> *node) {
 }
 
 template<typename T>
-bool AVLTree<T>::isBalanced(NodeBT<T> *node) {///TODO
+bool AVLTree<T>::isBalanced(NodeBT<T> *node) { /// TODO
    /* if (node->left == nullptr && node->right == nullptr)
         return true;
     if (balancingFactor(node) > 1 || balancingFactor(node) < -1)
@@ -105,17 +105,27 @@ void AVLTree<T>::remove(T val, NodeBT<T> *&node) {
 
 template<typename T>
 void AVLTree<T>::displayInOrder(NodeBT<T> *node) {
-    ///TODO
+    if (node == nullptr)
+        throw runtime_error("No elements in the tree");
+    if (node->left == nullptr && node->right == nullptr){
+        cout << node->data << endl;
+        return;
+    }
+    vector<T> vec;
+    inOrder(vec, node);
+    for (size_t i = 0; i < vec.size(); i++)
+        cout << vec[i] << " ";
+    cout << endl;
 }
 
 template<typename T>
 void AVLTree<T>::displayPreOrder(NodeBT<T> *node) {
-    ///TODO
+    /// TODO
 }
 
 template<typename T>
 void AVLTree<T>::displayPostOrder(NodeBT<T> *node) {
-    ///TODO
+    /// TODO
 }
 
 template<typename T>
@@ -148,34 +158,6 @@ void AVLTree<T>::displayDFS(NodeBT<T> *node) {
             pila.push(nodo->left);
     }
     cout << "\n";
-}
-
-template<typename T>
-void AVLTree<T>::displayPretty(NodeBT<T> *node) {/// TODO
-    /*queue<NodeBT<T>*> cola;
-    cola.push(node);
-    int padres = 1;
-    int hijos = 0;
-    while (!cola.empty()){
-        NodeBT<T> *nodo = cola.front();
-        cola.pop();
-        padres--;
-        cout << nodo->data << " ";
-        if (nodo->left != nullptr) {
-            cola.push(nodo->left);
-            hijos++;
-        }
-        if (nodo->right != nullptr){
-            cola.push(nodo->right);
-            hijos++;
-        }
-        if (padres == 0){
-            cout << "\n";
-            padres = hijos;
-            hijos = 0;
-        }
-    }
-    cout << "\n";*/
 }
 
 
