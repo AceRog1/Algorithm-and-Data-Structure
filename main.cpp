@@ -22,12 +22,12 @@ int main(){
     avl->insert(50);
     avl->insert(91);
     avl->insert(73);
-    avl->insert(5);
 
-    cout << avl->height() << endl;
-    avl->displayDFS();
     avl->displayPostOrder();
 
+    avl->displayPreOrder();
+
+    avl->displayInOrder();
 
 
     /*AVLTree<int> tree;

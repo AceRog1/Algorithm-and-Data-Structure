@@ -108,14 +108,14 @@ void AVLTree<T>::displayInOrder(NodeBT<T> *node) { // Test
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
-        cout << node->data << endl;
+        cout << node->data << "\n";
         return;
     }
     vector<T> vec;
     inOrder(vec, node);
     for (size_t i = 0; i < vec.size(); i++)
         cout << vec[i] << " ";
-    cout << endl;
+    cout << "\n";
 }
 
 template<typename T>
@@ -123,14 +123,14 @@ void AVLTree<T>::displayPreOrder(NodeBT<T> *node) { // Test
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
-        cout << node->data << endl;
+        cout << node->data << "\n";
         return;
     }
     vector<T> vec;
     preOrder(vec, node);
     for (size_t i = 0; i < vec.size(); i++)
         cout << vec[i] << " ";
-    cout << endl;
+    cout << "\n";
 }
 
 template<typename T>
@@ -138,14 +138,14 @@ void AVLTree<T>::displayPostOrder(NodeBT<T> *node) { // Test
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
-        cout << node->data << endl;
+        cout << node->data << "\n";
         return;
     }
     vector<T> vec;
     postOrder(vec, node);
     for (size_t i = 0; i < vec.size(); i++)
         cout << vec[i] << " ";
-    cout << endl;
+    cout << "\n";
 }
 
 template<typename T>

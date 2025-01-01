@@ -80,7 +80,7 @@ private:
         if (node == nullptr)
             return;
         inOrder(vec, node->left);
-        vec.pop_back(node->data);
+        vec.push_back(node->data);
         inOrder(vec, node->right);
     }
     void preOrder(std::vector<T>& vec, NodeBT<T>* node){
