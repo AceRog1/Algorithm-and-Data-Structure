@@ -23,11 +23,17 @@ int main(){
     avl->insert(91);
     avl->insert(73);
 
-    avl->displayPostOrder();
+    avl->displayInOrder();
 
-    avl->displayPreOrder();
+    avl->remove(11);
+    avl->remove(27);
+    avl->remove(91);
+    avl->remove(73);
 
     avl->displayInOrder();
+    std::cout << avl->height();
+
+
 
 
     /*AVLTree<int> tree;

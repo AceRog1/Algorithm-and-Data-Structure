@@ -34,9 +34,6 @@ public:
     int size(){
         return size(this->root);
     }
-    bool isBalanced(){
-        return isBalanced(this->root);
-    }
     void remove(T val){
         remove(val, this->root);
     }
@@ -68,7 +65,6 @@ private:
     T minValue(NodeBT<T> *node); // valor minimo
     T maxValue(NodeBT<T> *node); // valor maximo
     int size(NodeBT<T> *node); // Tamanio del arbol
-    bool isBalanced(NodeBT<T> *node); // Si esta Balanceado
     void remove(T val, NodeBT<T> *&node); // remove
     void displayInOrder(NodeBT<T> *node); // inOrder
     void displayPreOrder(NodeBT<T> *node); // preOrder

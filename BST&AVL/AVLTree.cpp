@@ -72,39 +72,36 @@ int AVLTree<T>::size(NodeBT<T> *node) {
 }
 
 template<typename T>
-bool AVLTree<T>::isBalanced(NodeBT<T> *node) { /// TODO
-   /* if (node->left == nullptr && node->right == nullptr)
-        return true;
-    if (balancingFactor(node) > 1 || balancingFactor(node) < -1)
-        return false;
-    if (node->left != nullptr)
-        return isBalanced(node->left);
-    if (node->right != nullptr)
-        return isBalanced(node->right);*/
-}
-
-template<typename T>
 void AVLTree<T>::remove(T val, NodeBT<T> *&node) {
-    /// TODO
-    /*if (size() == 0){
+    if (size() == 0){
         throw runtime_error("No elements in the Tree");
     } else {
         if(node == nullptr){
             throw runtime_error("Invalid element");
         }
         if(node->data == val){
-            if (node->)
+            if (node->left != nullptr){
+                NodeBT<T>* temp = node->right;
+                node = node->left;
+                node->right = temp;
+            } else if (node->right != nullptr)
+                node = node->right;
+            else
+                node = nullptr;
+            return;
         }
         if (val < node->data){
-            return find(val, node->left);
+            remove(val, node->left);
         } else {
-            return find(val, node->right);
+            remove(val, node->right);
         }
-    }*/
+        balance(node);
+        updateHeight(node);
+    }
 }
 
 template<typename T>
-void AVLTree<T>::displayInOrder(NodeBT<T> *node) { // Test
+void AVLTree<T>::displayInOrder(NodeBT<T> *node) {
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
@@ -119,7 +116,7 @@ void AVLTree<T>::displayInOrder(NodeBT<T> *node) { // Test
 }
 
 template<typename T>
-void AVLTree<T>::displayPreOrder(NodeBT<T> *node) { // Test
+void AVLTree<T>::displayPreOrder(NodeBT<T> *node) {
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
@@ -134,7 +131,7 @@ void AVLTree<T>::displayPreOrder(NodeBT<T> *node) { // Test
 }
 
 template<typename T>
-void AVLTree<T>::displayPostOrder(NodeBT<T> *node) { // Test
+void AVLTree<T>::displayPostOrder(NodeBT<T> *node) {
     if (node == nullptr)
         throw runtime_error("No elements in the tree");
     if (node->left == nullptr && node->right == nullptr){
