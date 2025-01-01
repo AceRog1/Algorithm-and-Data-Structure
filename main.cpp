@@ -26,6 +26,7 @@ int main(){
 
     cout << avl->height() << endl;
     avl->displayDFS();
+    avl->displayPostOrder();
 
 
 

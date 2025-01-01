@@ -79,22 +79,22 @@ private:
     void inOrder(std::vector<T>& vec, NodeBT<T>* node){
         if (node == nullptr)
             return;
-        inOrder(node->left);
+        inOrder(vec, node->left);
         vec.pop_back(node->data);
-        inOrder(node->right);
+        inOrder(vec, node->right);
     }
     void preOrder(std::vector<T>& vec, NodeBT<T>* node){
         if (node == nullptr)
             return;
         vec.push_back(node->data);
-        preOrder(node->left);
-        preOrder(node->right);
+        preOrder(vec, node->left);
+        preOrder(vec, node->right);
     }
     void postOrder(std::vector<T>& vec, NodeBT<T>* node){
         if (node == nullptr)
             return;
-        postOrder(node->left);
-        postOrder(node->right);
+        postOrder(vec, node->left);
+        postOrder(vec, node->right);
         vec.push_back(node->data);
     }
 private:
