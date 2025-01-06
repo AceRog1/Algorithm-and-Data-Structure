@@ -5,11 +5,13 @@
 #include <string>
 #include <sstream>
 #include <type_traits>
+#include <algorithm>
+#include <vector>
 #include "ForwardList.h"
 
 using namespace std;
 
-
+/*
 // FUNCION MERGE
 template<typename T>
 void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right){
@@ -87,6 +89,7 @@ void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int rig
     mergeSort(list, sortList, mid+1, right);
     merge(list, sortList, left, mid, right);
 }
+ */
 
 template<typename T>
 ForwardList<T>::ForwardList(){
@@ -263,13 +266,14 @@ int ForwardList<T>::size(){
 
 template<typename T>
 void ForwardList<T>::clear(){
-    for(int i = 0; i < size(); i++)
+    int l = length;
+    for(int i = 0; i < l; i++)
         pop_front();
 }
 
 template<typename T>
 void ForwardList<T>::sort(){
-    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+    /*if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
         auto sortList = new ForwardList<T>();
         mergeSort(this, sortList, 0, length-1);
         Node* sortedNode = sortList->head;
@@ -282,6 +286,25 @@ void ForwardList<T>::sort(){
         }
 
         delete sortList;
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
+    }*/
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        if (is_sorted())
+            return;
+        int t = length;
+        vector<T> arr;
+        Node* temp = head;
+        size_t i = 0;
+        while (temp != nullptr){
+            arr.push_back(temp->data);
+            temp = temp->next;
+            i++;
+        }
+        this->clear();
+        std::sort(arr.begin(), arr.end());
+        for (int j = 0; j < t; j++)
+            this->push_front(arr[t-j-1]);
     } else {
         throw runtime_error("The elements in the list are not numbers");
     }
@@ -337,7 +360,7 @@ void ForwardList<T>::reverse(){
 }
 
 template<typename T>
-string ForwardList<T>::name(){
+string ForwardList<T>::print(){
     if (is_empty()){
         throw runtime_error("No elements in the list");
     } else {

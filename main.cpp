@@ -21,16 +21,21 @@ int main(){
     lista.push_front(2);
     lista.push_front(1);
 
-    std::cout << lista.name() << std::endl;
+    std::cout << lista.print() << std::endl;
 
     ForwardList<int>::iterator iter;
 
     for (iter = lista.begin(); iter != lista.end(); ++iter){
         std::cout << *iter << " -> ";
     }
-    std::cout << "\n";
+    std::cout << "nullptr\n";
 
     lista.sort();
+
+    for (iter = lista.begin(); iter != lista.end(); ++iter){
+        std::cout << *iter << " -> ";
+    }
+    std::cout << "nullptr\n";
 
     return 0;
 }

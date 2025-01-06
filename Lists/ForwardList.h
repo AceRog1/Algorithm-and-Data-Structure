@@ -71,11 +71,11 @@ public:
     void sort() override;
     bool is_sorted() override;
     void reverse() override;
-    std::string name() override;
+    std::string print() override;
     ~ForwardList();
 private:
-    friend void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);
-    friend void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);
+    //friend void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);
+    //friend void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);
 public:
     friend class ForwardListInterator<T>;
     typedef ForwardListInterator<T> iterator;
@@ -88,11 +88,11 @@ public:
     }
 };
 
-template<typename T>
-void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);
+//template<typename T>
+//void merge(ForwardList<T>*& list, ForwardList<T>*& sortList, int left, int mid, int right);
 
-template<typename T>
-void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);
+//template<typename T>
+//void mergeSort(ForwardList<T>* list, ForwardList<T>* sortList, int left, int right);
 
 #endif //ALGORITHMANDDATASTRUCTURE_FORWARDLIST_H
 
