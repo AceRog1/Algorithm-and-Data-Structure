@@ -203,12 +203,42 @@ void CircularList<T>::clear() {
 
 template<typename T>
 void CircularList<T>::sort() {
-    //TODO
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        if (is_sorted() || is_empty())
+            return;
+        int t = length;
+        vector<T> arr;
+        Node* temp = cptr->next;
+        size_t i = 0;
+        while (temp != cptr){
+            arr.push_back(temp->data);
+            temp = temp->next;
+            i++;
+        }
+        this->clear();
+        std::sort(arr.begin(), arr.end());
+        for (int j = 0; j < t; j++)
+            this->push_front(arr[t-j-1]);
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
+    }
 }
 
 template<typename T>
 bool CircularList<T>::is_sorted() {
-    //TODO
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        Node* temp = cptr->next;
+        while (temp != cptr){
+            if (temp->prev != cptr && temp->prev->data > temp->data)
+                return false;
+            if (temp->next != cptr && temp->next->data < temp->data)
+                return false;
+            temp = temp->next;
+        }
+        return true;
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
+    }
 }
 
 template<typename T>
