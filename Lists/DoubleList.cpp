@@ -214,7 +214,8 @@ int DoubleList<T>::size(){
 
 template<typename T>
 void DoubleList<T>::clear(){
-    for (int i = 0; i < size(); i++)
+    int l = length;
+    for (int i = 0; i < l; i++)
         pop_front();
 }
 
