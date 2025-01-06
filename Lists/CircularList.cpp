@@ -234,7 +234,7 @@ void CircularList<T>::reverse() {
 }
 
 template<typename T>
-string CircularList<T>::name() {
+string CircularList<T>::print() {
     stringstream ss;
     Node* temp = cptr->next;
     while(temp->next != cptr){

@@ -85,7 +85,7 @@ public:
     void sort() override;
     bool is_sorted() override;
     void reverse() override;
-    std::string name() override;
+    std::string print() override;
     ~CircularList();
 public:
     friend class CircularListIterator<T>;
