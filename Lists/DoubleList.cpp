@@ -3,6 +3,9 @@
 //
 
 #include <sstream>
+#include <type_traits>
+#include <algorithm>
+#include <vector>
 #include "DoubleList.h"
 
 using namespace std;
@@ -221,20 +224,42 @@ void DoubleList<T>::clear(){
 
 template<typename T>
 void DoubleList<T>::sort(){
-    //TODO
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        if (is_sorted() || is_empty())
+            return;
+        int t = length;
+        vector<T> arr;
+        Node* temp = head;
+        size_t i = 0;
+        while (temp != nullptr){
+            arr.push_back(temp->data);
+            temp = temp->next;
+            i++;
+        }
+        this->clear();
+        std::sort(arr.begin(), arr.end());
+        for (int j = 0; j < t; j++)
+            this->push_front(arr[t-j-1]);
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
+    }
 }
 
 template<typename T>
 bool DoubleList<T>::is_sorted(){
-    Node* temp = head;
-    while (temp != nullptr){
-        if (temp->prev != nullptr && temp->prev->data > temp->data)
-            return false;
-        if (temp->next != nullptr && temp->next->data < temp->data)
-            return false;
-        temp = temp->next;
+    if (is_same<T, int>::value || is_same<T, double>::value || is_same<T, float>::value){
+        Node* temp = head;
+        while (temp != nullptr){
+            if (temp->prev != nullptr && temp->prev->data > temp->data)
+                return false;
+            if (temp->next != nullptr && temp->next->data < temp->data)
+                return false;
+            temp = temp->next;
+        }
+        return true;
+    } else {
+        throw runtime_error("The elements in the list are not numbers");
     }
-    return true;
 }
 
 template<typename T>
