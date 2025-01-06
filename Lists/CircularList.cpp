@@ -3,6 +3,9 @@
 //
 
 #include <sstream>
+#include <vector>
+#include <algorithm>
+#include <type_traits>
 #include "CircularList.h"
 
 using namespace std;
