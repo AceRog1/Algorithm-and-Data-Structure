@@ -18,15 +18,17 @@ int main(){
     list.push_back("5");
     list.push_back("6");
     list.push_back("7");
-    list.push_back("8");
+    list.push_back("9");
 
-    std::cout << list.name() << std::endl;
+    std::cout << list.print() << std::endl;
 
     DoubleList<string>::iterator iter;
 
-    for(iter = list.beginFront(); iter != list.end(); ++iter){
-        std::cout << *iter << std::endl;
-    }
+    for(iter = list.beginFront(); iter != list.end(); ++iter)
+        std::cout << *iter << " - ";
+    std::cout << "\n";
+
+    std::cout << list.is_sorted();
 
     /*
     std::cout << "Front: " << list.front() << std::endl;

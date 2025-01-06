@@ -225,7 +225,15 @@ void DoubleList<T>::sort(){
 
 template<typename T>
 bool DoubleList<T>::is_sorted(){
-    //TODO
+    Node* temp = head;
+    while (temp != nullptr){
+        if (temp->prev != nullptr && temp->prev->data > temp->data)
+            return false;
+        if (temp->next != nullptr && temp->next->data < temp->data)
+            return false;
+        temp = temp->next;
+    }
+    return true;
 }
 
 template<typename T>
@@ -265,7 +273,7 @@ void DoubleList<T>::reverse(){
 }
 
 template<typename T>
-string DoubleList<T>::name(){
+string DoubleList<T>::print(){
     stringstream ss;
     Node* temp = head;
     do {

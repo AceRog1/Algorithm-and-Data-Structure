@@ -83,7 +83,7 @@ public:
     void sort() override;
     bool is_sorted() override;
     void reverse() override;
-    std::string name() override;
+    std::string print() override;
     ~DoubleList();
 public:
     friend class DoubleListIterator<T>;
